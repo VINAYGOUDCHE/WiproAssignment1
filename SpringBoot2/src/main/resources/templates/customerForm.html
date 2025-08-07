@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Save Page</title>
+</head>
+<body>
+    <form action="#" th:action="@{/cust/save.do}" th:object="${customer}" method="post">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" th:field="*{name}" /></td>
+                <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;">Name Error</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" th:field="*{email}" /></td>
+                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;">Email Error</td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td><input type="number" th:field="*{age}" /></td>
+                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: red;">Age Error</td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td>
+                    <select th:field="*{gender}">
+                        <option value="">Select Gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Other</option>
+                    </select>
+                </td>
+                <td th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" style="color: red;">Gender Error</td>
+            </tr>
+            <tr>
+                <td>Birthday:</td>
+                <td><input type="date" th:field="*{birthday}" /></td>
+                <td th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}" style="color: red;">Birthday Error</td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td><input type="text" th:field="*{phone}" /></td>
+                <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red;">Phone Error</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="submit">Save Customer</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
