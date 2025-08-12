@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Lab - Lab4</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>Image Lab – Gallery</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="main-content-wrapper">
+                <section class="gallery-column">
+                    <h2>Responsive Image Gallery</h2>
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="Cow.jpeg" alt="A cow sitting in a grassy field." loading="lazy">
+                            <p>Cow in a field.</p>
+                        </div>
+                        <div class="gallery-item">
+                            <picture>
+                                <source srcset="Flowers.webp" type="image/webp">
+                                <img src="Flowers.jpeg" alt="A close-up of pink flowers in a garden." loading="lazy">
+                            </picture>
+                            <p>Pink Flowers<br>(WebP served when supported).</p>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="Tractor.jpeg"
+                                 srcset="Tractor-small.jpeg 400w, Tractor.jpeg 800w"
+                                 sizes="(max-width: 768px) 400px, 800px"
+                                 alt="A large green tractor in a rural field."
+                                 loading="lazy">
+                            <p>A Green Tractor.</p>
+                        </div>
+                        <div class="gallery-item">
+                            <svg class="delivery-truck" width="100%" height="auto" viewBox="0 0 200 100" role="img" aria-labelledby="svgTitle svgDesc">
+                                <title id="svgTitle">A decorative banner</title>
+                                <desc id="svgDesc">A simple, brown decorative divider.</desc>
+                                <rect x="0" y="40" width="200" height="20" fill="#A0522D" stroke="#8B4513" stroke-width="2" />
+                            </svg>
+                            <p>Decorative divider<br>(not read by screen readers).</p>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="medicine.jpeg" alt="Assorted medicine bottles and a thermometer." usemap="#medmap">
+                            <p>Click on the bottles to navigate<br>(image map).</p>
+                            <map name="medmap">
+                                <area shape="rect" coords="100,50,150,150" href="#vials" alt="Medicine vials">
+                                <area shape="rect" coords="10,120,90,190" href="#stethoscope" alt="Stethoscope">
+                            </map>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="notes-column">
+                    <h2>Notes</h2>
+                    <p>Use <code>srcset</code> and <code>&lt;picture&gt;</code> to reduce bandwidth and serve modern formats.</p>
+                    <p>Add <code>loading="lazy"</code> to defer off-screen images.</p>
+                </section>
+            </div>
+            
+            <hr>
+
+            <section class="submit-lab">
+                <h3>Submit Lab</h3>
+                <button>Submit Lab</button>
+            </section>
+        </div>
+    </main>
+
+</body>
+</html>

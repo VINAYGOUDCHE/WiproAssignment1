@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Store Catalog</title>
+    <style>
+        /*
+         * Internal CSS for the entire page.
+         * This section defines the overall styles, layout, and common element appearances.
+         */
+        body {
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #1a2333;
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .header p {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        .product-section {
+            /* Using Flexbox to create a responsive, centered layout */
+            display: flex;
+            justify-content: center;
+            align-items: stretch; /* This is the key change to make all cards the same height */
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            
+            /* Use flex-grow and flex-basis for flexible, equal sizing */
+            flex-grow: 1;
+            flex-basis: 300px;
+            
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer; /* Adds a hand icon on hover to indicate interactivity */
+            
+            /* Using flexbox within the card to ensure content is aligned nicely */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px); /* This makes the card lift up slightly on hover */
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #1a2333;
+        }
+
+        .product-card p {
+            color: #777;
+            font-size: 0.9em;
+            margin: 5px 0 15px 0;
+            flex-grow: 1; /* Pushes the button to the bottom of the card */
+        }
+
+        .product-price {
+            font-size: 1.2em;
+            color: #1a2333;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .buy-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            margin-top: auto; 
+        }
+
+        .buy-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Furniture Store Catalog</h1>
+        <p>Find the best furniture for your home</p>
+    </header>
+
+    <div class="product-section">
+
+        <!-- Product 1: Sofa -->
+        <div class="product-card">
+            <img src="Sofa.jpg" alt="Comfortable Sofa" class="product-image">
+            <h3>Sofa</h3>
+            <p>Comfortable and stylish sofa with plush cushions and a durable frame, perfect for any living room.</p>
+            <div class="product-price">₹49999</div>
+            <a href="#" class="buy-button">Buy Now</a>
+        </div>
+
+        <!-- Product 2: Dining Table (with inline CSS) -->
+        <div class="product-card" style="background-color: #f9f9f9;">
+            <img src="Dining.jpeg" alt="Wooden Dining Table" class="product-image">
+            <h3>Dining Table</h3>
+            <p>A sleek, modern wooden dining table that seats four people comfortably. Its minimalist design fits perfectly in any home.</p>
+            <div class="product-price">₹29999</div>
+            <a href="#" class="buy-button">Buy Now</a>
+        </div>
+
+        <!-- Product 3: Chair (with inline CSS) -->
+        <div class="product-card">
+            <img src="chair.jpeg" alt="Modern Chair" class="product-image">
+            <h3>Chair</h3>
+            <p>A modern chair with a unique design, providing great comfort and style for any room. It's a perfect accent piece or desk chair.</p>
+            <div class="product-price">₹14999</div>
+            <a href="#" class="buy-button">Buy Now</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

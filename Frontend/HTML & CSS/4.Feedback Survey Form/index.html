@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Feedback Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        header p {
+            margin: 0.5rem 0 0;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 0.5rem 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            gap: 1rem;
+            padding: 0 1rem;
+            flex: 1;
+        }
+        
+        main {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex: 2; /* Main content takes up more space */
+        }
+        
+        aside {
+            background-color: #ffffe0; /* Light yellow background */
+            padding: 1.5rem;
+            border-left: 4px solid #f0e68c;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex: 1; /* Aside takes up less space */
+        }
+        
+        aside h2 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        form section {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+        
+        form section:last-of-type {
+            border-bottom: none;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        label.radio-label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        textarea,
+        select {
+            width: calc(100% - 1.2rem);
+            padding: 0.6rem;
+            margin-top: 0.2rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        
+        .radio-group, .checkbox-group {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .button-group button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #0056b3;
+        }
+        
+        .reset-button {
+            background-color: #fff;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+        
+        .submit-button:hover, .reset-button:hover {
+            opacity: 0.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Website Feedback Survey</h1>
+        <p>We value your opinion. Please take a minute to share your thoughts.</p>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="container">
+        <main>
+            <form action="#" method="post">
+                <section>
+                    <h3>Personal Information</h3>
+                    <label for="fullname">Full Name *</label>
+                    <input type="text" id="fullname" name="fullname" required>
+
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" min="10" max="100">
+                </section>
+
+                <section>
+                    <h3>Website Rating</h3>
+                    <label for="design-rating">Design (1-10):</label>
+                    <input type="range" id="design-rating" name="design-rating" min="1" max="10" value="5">
+
+                    <p>Content Quality:</p>
+                    <div class="radio-group">
+                        <input type="radio" id="excellent" name="content-quality" value="excellent">
+                        <label for="excellent" class="radio-label">Excellent</label>
+                        <input type="radio" id="good" name="content-quality" value="good">
+                        <label for="good" class="radio-label">Good</label>
+                        <input type="radio" id="average" name="content-quality" value="average">
+                        <label for="average" class="radio-label">Average</label>
+                        <input type="radio" id="poor" name="content-quality" value="poor">
+                        <label for="poor" class="radio-label">Poor</label>
+                    </div>
+
+                    <label for="most-visited">Most visited page:</label>
+                    <select id="most-visited" name="most-visited">
+                        <option value="home">Home</option>
+                        <option value="blog">Blog</option>
+                        <option value="products">Products</option>
+                        <option value="contact">Contact</option>
+                    </select>
+                </section>
+
+                <section>
+                    <h3>Suggestions</h3>
+                    <textarea id="suggestions" name="suggestions" placeholder="Write your suggestions here..."></textarea>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="contact-agreement" name="contact-agreement">
+                        <label for="contact-agreement">I agree to be contacted regarding my feedback</label>
+                    </div>
+                </section>
+
+                <div class="button-group">
+                    <button type="submit" class="submit-button">Submit</button>
+                    <button type="reset" class="reset-button">Reset</button>
+                </div>
+            </form>
+        </main>
+
+        <aside>
+            <h2>Why your feedback matters</h2>
+            <p>Your feedback helps us improve our website experience for everyone. Thank you!</p>
+        </aside>
+    </div>
+
+    <footer>
+        <p>© 2025 Website Survey</p>
+    </footer>
+
+</body>
+</html>

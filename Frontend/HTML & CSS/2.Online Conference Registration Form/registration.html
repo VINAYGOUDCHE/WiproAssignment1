@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Conference Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <h1 style="text-align:center;">ONLINE CONFERENCES REGISTRATION FORM</h1>
+
+    <form id="registrationForm" action="/submit-form" method="post" enctype="multipart/form-data">
+        
+        <h2 class="section-heading">Personal Information</h2>
+        <table>
+            <tr>
+                <td><label for="fullName">Full Name:</label></td>
+                <td><input type="text" id="fullName" name="fullName"></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email Address:</label></td>
+                <td>
+                    <input type="text" id="email" name="email">
+                    <br><small>format: user@example.com</small>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Gender:</label></td>
+                <td>
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="country">Country:</label></td>
+                <td>
+                    <select id="country" name="country">
+                        <option value="">--Select--</option>
+                        <option value="usa">USA</option>
+                        <option value="canada">Canada</option>
+                        <option value="uk">UK</option>
+                        <option value="australia">Australia</option>
+                        <option value="india">India</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="profilePhoto">Profile Photo Upload:</label></td>
+                <td><input type="file" id="profilePhoto" name="profilePhoto"></td>
+            </tr>
+        </table>
+        
+        <h2 class="section-heading">Account Preferences</h2>
+        <table>
+            <tr>
+                <td><label for="username">Username:</label></td>
+                <td><input type="text" id="username" name="username"></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" id="password" name="password"></td>
+            </tr>
+            <tr>
+                <td><label for="confirmPassword">Confirm Password:</label></td>
+                <td><input type="password" id="confirmPassword" name="confirmPassword"></td>
+            </tr>
+            <tr>
+                <td><label>Interests:</label></td>
+                <td>
+                    <input type="checkbox" id="webdev" name="interests" value="webdev">
+                    <label for="webdev">Web Development</label>
+                    <input type="checkbox" id="ai" name="interests" value="ai">
+                    <label for="ai">AI</label>
+                    <input type="checkbox" id="cloud" name="interests" value="cloud">
+                    <label for="cloud">Cloud</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Preferred Contact Method:</label></td>
+                <td>
+                    <input type="radio" id="emailContact" name="contactMethod" value="email">
+                    <label for="emailContact">Email</label>
+                    <input type="radio" id="phoneContact" name="contactMethod" value="phone">
+                    <label for="phoneContact">Phone</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="comments">Special Requirements / Comments:</label></td>
+                <td><textarea id="comments" name="comments" rows="4" cols="50"></textarea></td>
+            </tr>
+        </table>
+
+        <h2 class="section-heading">Payment Details</h2>
+        <table>
+            <tr>
+                <td><label for="paymentMethod">Payment Method:</label></td>
+                <td>
+                    <select id="paymentMethod" name="paymentMethod">
+                        <option value="">--Select--</option>
+                        <option value="credit">Credit Card</option>
+                        <option value="debit">Debit Card</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="cardNumber">Card Number:</label></td>
+                <td><input type="text" id="cardNumber" name="cardNumber"></td>
+            </tr>
+            <tr>
+                <td><label for="expiryMonth">Expiry Date:</label></td>
+                <td>
+                    <select id="expiryMonth" name="expiryMonth">
+                        <option value="">Month</option>
+                        </select>
+                    <select id="expiryYear" name="expiryYear">
+                        <option value="">Year</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="cvv">CVV:</label></td>
+                <td><input type="password" id="cvv" name="cvv" size="3"></td>
+            </tr>
+            <tr>
+                <td><label for="terms">Terms & Conditions:</label></td>
+                <td>
+                    <input type="checkbox" id="terms" name="terms">
+                    <label for="terms">I agree to Terms</label>
+                </td>
+            </tr>
+        </table>
+        
+        <br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+
+</body>
+</html>

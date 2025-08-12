@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.HTML Multimedia</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 2em;
+        }
+        h1, h2, h3 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5em;
+        }
+        .container {
+            border: 1px solid #ddd;
+            padding: 1em;
+            margin-top: 1em;
+            background-color: #f9f9f9;
+        }
+        .caption {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 1em;
+        }
+        iframe {
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 300px;
+        }
+        .demo-iframe-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #eee;
+        }
+        .demo-iframe-header {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .demo-iframe-header .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .dot.red { background-color: #ff5f56; }
+        .dot.yellow { background-color: #ffbd2e; }
+        .dot.green { background-color: #27c93f; }
+
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background-color: black;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        .video-player-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .video-player-container .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 0, 0, 0.8);
+            clip-path: polygon(30% 20%, 30% 80%, 80% 50%);
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>HTML5 Multimedia Lab</h2>
+    <div class="container">
+        <p>This page demonstrates video, audio, embed (PDF), iframe, and inline SVG. Below is a visual preview.</p>
+        
+        <h3>Video (sample.mp4)</h3>
+        <p>poster.jpg</p>
+        <video controls poster="poster.jpg">
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        </div>
+
+        <h3>Audio (sample.mp3)</h3>
+        <p>controls | loop</p>
+        <audio controls loop>
+            <source src="Audio.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <h3>Embed (document.pdf)</h3>
+        <div class="container">
+            <embed src="Elevator.pdf" type="application/pdf" width="100%" height="400px">
+            <p>If not visible, download <a href="document.pdf">document.pdf</a></p>
+        </div>
+
+        <h3>Iframe (demo.html)</h3>
+        <div class="demo-iframe-container">
+            <div class="demo-iframe-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span>demo.html</span>
+            </div>
+            <p>Embedded page preview...</p>
+            <iframe src="demo.html" title="demo page"></iframe>
+            <div class="caption">Preview created for the HTML5 Multimedia Lab. Files saved in the workspace.</div>
+        </div>
+
+        <h3>Inline SVG</h3>
+        <hr>
+        <svg width="100" height="100">
+            <polygon points="50,10 90,50 50,90 10,50" stroke="black" stroke-width="3" fill="blue" />
+        </svg>
+
+    </div>
+
+</body>
+</html>

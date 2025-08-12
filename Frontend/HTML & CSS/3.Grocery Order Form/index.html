@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Grocery Order Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4a4e69;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        fieldset {
+            border: 1px solid #dcdde1;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        legend {
+            font-weight: bold;
+            color: #4a4e69;
+            padding: 0 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+        }
+        .radio-group input, .checkbox-group input {
+            margin-right: 8px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        .button-group button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .button-group button[type="submit"] {
+            background-color: #55b76c;
+            color: #ffffff;
+        }
+        .button-group button[type="submit"]:hover {
+            background-color: #48a05c;
+        }
+        .button-group button[type="reset"] {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .button-group button[type="reset"]:hover {
+            background-color: #d0d0d0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Online Grocery Order</h1>
+        <form id="orderForm" action="order.php" method="POST">
+            <fieldset>
+                <legend>Customer Details</legend>
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="John Doe" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobileNumber">Mobile Number (10 digits)</label>
+                    <input type="tel" id="mobileNumber" name="mobileNumber" pattern="[0-9]{10}" placeholder="e.g., 9876543210" required>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryAddress">Delivery Address</label>
+                    <textarea id="deliveryAddress" name="deliveryAddress" required></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Order Details</legend>
+                <div class="form-group">
+                    <label>Grocery Items</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="items[]" value="rice"> Rice</label>
+                        <label><input type="checkbox" name="items[]" value="milk"> Milk</label>
+                        <label><input type="checkbox" name="items[]" value="bread"> Bread</label>
+                        <label><input type="checkbox" name="items[]" value="eggs"> Eggs</label>
+                        <label><input type="checkbox" name="items[]" value="sugar"> Sugar</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="deliveryDate">Delivery Date</label>
+                    <input type="date" id="deliveryDate" name="deliveryDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryTime">Preferred Delivery Time</label>
+                    <input type="time" id="deliveryTime" name="deliveryTime">
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="paymentMethod" value="cash" required> Cash on Delivery</label>
+                        <label><input type="radio" name="paymentMethod" value="upi"> UPI</label>
+                        <label><input type="radio" name="paymentMethod" value="card"> Card</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="specialInstructions">Special Instructions (optional)</label>
+                <textarea id="specialInstructions" name="specialInstructions"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="confirmOrder" required>
+                    I confirm my order
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button type="reset">Reset</button>
+                <button type="submit">Submit Order</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

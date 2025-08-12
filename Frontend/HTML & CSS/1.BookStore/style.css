@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.welcome-section {
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.book-categories {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.book-categories th, .book-categories td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.book-categories th {
+    background-color: #f2f2f2;
+}
+
+.lists-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.lists-container div {
+    width: 48%;
+}
+
+.preview-signup-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0;
+}
+
+.book-preview, .newsletter-signup {
+    width: 48%;
+}
+
+.newsletter-signup label,
+.newsletter-signup input,
+.newsletter-signup select,
+.newsletter-signup textarea {
+    display: block;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+.newsletter-signup input[type="text"],
+.newsletter-signup input[type="email"],
+.newsletter-signup select,
+.newsletter-signup textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.newsletter-signup input[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+}
