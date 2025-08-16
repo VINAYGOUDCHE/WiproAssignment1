@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Market Portfolio Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-8 space-y-6">
+
+        <h1 class="text-3xl font-bold text-center text-blue-800">Share Market Portfolio Tracker</h1>
+        <p class="text-center text-gray-600">This tool demonstrates JavaScript closures by managing a private portfolio.</p>
+
+        <div class="flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4 p-6 bg-gray-100 rounded-xl">
+                <h2 class="text-xl font-semibold text-gray-700">Actions</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="text" id="companyInput" placeholder="Company Name" class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="number" id="quantityInput" placeholder="Quantity" class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="number" id="priceInput" placeholder="Price per Share" class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex gap-4">
+                    <button id="buyButton" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-md">Buy Shares</button>
+                    <button id="sellButton" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-md">Sell Shares</button>
+                </div>
+                <button id="valueButton" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-md">Show Total Value</button>
+            </div>
+
+            <div class="flex-1 space-y-4 p-6 bg-gray-100 rounded-xl">
+                <h2 class="text-xl font-semibold text-gray-700">Output</h2>
+                <div id="output" class="bg-white p-4 rounded-lg min-h-[150px] overflow-auto text-sm border border-gray-300 font-mono">
+                </div>
+                <div id="messageBox" class="bg-yellow-100 text-yellow-800 p-4 rounded-lg hidden"></div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        const initializeApp = () => {
+            const companyInput = document.getElementById('companyInput');
+            const quantityInput = document.getElementById('quantityInput');
+            const priceInput = document.getElementById('priceInput');
+            const buyButton = document.getElementById('buyButton');
+            const sellButton = document.getElementById('sellButton');
+            const valueButton = document.getElementById('valueButton');
+            const outputDiv = document.getElementById('output');
+            const messageBox = document.getElementById('messageBox');
+
+            const createPortfolioTracker = () => {
+                const portfolio = [];
+
+                const findShare = (companyName) => {
+                    return portfolio.find(share => share.company.toLowerCase() === companyName.toLowerCase());
+                };
+
+                const buyShare = (company, quantity, pricePerShare) => {
+                    if (quantity <= 0 || !company || !pricePerShare) {
+                        return false;
+                    }
+                    
+                    const existingShare = findShare(company);
+                    if (existingShare) {
+                        existingShare.quantity += quantity;
+                    } else {
+                        portfolio.push({
+                            company: company,
+                            quantity: quantity,
+                            price: pricePerShare
+                        });
+                    }
+                    return true;
+                };
+
+                const sellShare = (company, quantity) => {
+                    if (quantity <= 0 || !company) {
+                        return false;
+                    }
+                    const existingShare = findShare(company);
+                    if (!existingShare || existingShare.quantity < quantity) {
+                        return false;
+                    }
+                    existingShare.quantity -= quantity;
+                    if (existingShare.quantity === 0) {
+                        const index = portfolio.indexOf(existingShare);
+                        portfolio.splice(index, 1);
+                    }
+                    return true;
+                };
+
+                const totalValue = () => {
+                    const total = portfolio.reduce((sum, share) => {
+                        return sum + (share.quantity * share.price);
+                    }, 0);
+                    return total;
+                };
+
+                return {
+                    buyShare: buyShare,
+                    sellShare: sellShare,
+                    totalValue: totalValue
+                };
+            };
+            
+            const myPortfolio = createPortfolioTracker();
+
+            const logMessage = (message, type = 'info') => {
+                const p = document.createElement('p');
+                p.textContent = message;
+                p.className = 'py-1';
+                if (type === 'error') {
+                    p.className += ' text-red-600 font-semibold';
+                } else if (type === 'success') {
+                    p.className += ' text-green-600';
+                } else {
+                    p.className += ' text-gray-800';
+                }
+                outputDiv.appendChild(p);
+                outputDiv.scrollTop = outputDiv.scrollHeight;
+            };
+
+            const showMessageBox = (message, type = 'info') => {
+                messageBox.textContent = message;
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('flex');
+                if (type === 'error') {
+                    messageBox.className = 'bg-red-100 text-red-800 p-4 rounded-lg';
+                } else {
+                    messageBox.className = 'bg-yellow-100 text-yellow-800 p-4 rounded-lg';
+                }
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                }, 3000);
+            };
+
+            buyButton.addEventListener('click', () => {
+                const company = companyInput.value.trim();
+                const quantity = parseInt(quantityInput.value, 10);
+                const price = parseFloat(priceInput.value);
+
+                if (company && quantity > 0 && price > 0) {
+                    const success = myPortfolio.buyShare(company, quantity, price);
+                    if (success) {
+                        logMessage(`Bought ${quantity} shares of ${company} at ₹${price} each.`, 'success');
+                        companyInput.value = '';
+                        quantityInput.value = '';
+                        priceInput.value = '';
+                    } else {
+                        showMessageBox('Invalid input for buying shares.', 'error');
+                    }
+                } else {
+                    showMessageBox('Please fill in all fields with valid values.', 'error');
+                }
+            });
+
+            sellButton.addEventListener('click', () => {
+                const company = companyInput.value.trim();
+                const quantity = parseInt(quantityInput.value, 10);
+
+                if (company && quantity > 0) {
+                    const success = myPortfolio.sellShare(company, quantity);
+                    if (success) {
+                        logMessage(`Sold ${quantity} shares of ${company}.`, 'success');
+                        companyInput.value = '';
+                        quantityInput.value = '';
+                    } else {
+                        showMessageBox('Cannot sell shares. Check company name and quantity.', 'error');
+                    }
+                } else {
+                    showMessageBox('Please enter a valid company name and quantity to sell.', 'error');
+                }
+            });
+
+            valueButton.addEventListener('click', () => {
+                const total = myPortfolio.totalValue();
+                logMessage(`Current Portfolio Value: ₹${total.toLocaleString('en-IN')}`, 'info');
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
+    </script>
+</body>
+</html>

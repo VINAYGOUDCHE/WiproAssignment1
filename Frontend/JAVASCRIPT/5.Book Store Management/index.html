@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Book Store Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .message-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <h1 class="text-4xl font-bold text-gray-800 mb-6">Book Store Management</h1>
+        <p class="text-gray-600 mb-8">Interact with the book inventory using the forms below.</p>
+
+        <div id="messageBox" class="message-modal hidden bg-gray-900 text-white p-4 rounded-lg shadow-lg"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Add New Book</h2>
+                <input type="text" id="addTitle" placeholder="Title" class="w-full p-2 mb-3 rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" id="addAuthor" placeholder="Author" class="w-full p-2 mb-3 rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="number" id="addPrice" placeholder="Price" class="w-full p-2 mb-3 rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="flex items-center mb-4">
+                    <input type="checkbox" id="addAvailable" class="rounded text-blue-600 focus:ring-blue-500">
+                    <label for="addAvailable" class="ml-2 text-blue-700">Available</label>
+                </div>
+                <button id="addButton" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition duration-300">Add Book</button>
+            </div>
+
+            <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                <h2 class="text-2xl font-semibold text-green-800 mb-4">Update Price</h2>
+                <input type="text" id="updateTitle" placeholder="Title to Update" class="w-full p-2 mb-3 rounded-lg border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <input type="number" id="updatePrice" placeholder="New Price" class="w-full p-2 mb-4 rounded-lg border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button id="updateButton" class="w-full bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700 transition duration-300">Update Price</button>
+            </div>
+
+            <div class="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
+                <h2 class="text-2xl font-semibold text-yellow-800 mb-4">Toggle Availability</h2>
+                <input type="text" id="toggleAvailableTitle" placeholder="Title to Toggle" class="w-full p-2 mb-4 rounded-lg border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                <button id="toggleAvailableButton" class="w-full bg-yellow-600 text-white font-bold py-2 rounded-lg hover:bg-yellow-700 transition duration-300">Toggle Availability</button>
+            </div>
+
+            <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                <h2 class="text-2xl font-semibold text-red-800 mb-4">Delete Book</h2>
+                <input type="text" id="deleteTitle" placeholder="Title to Delete" class="w-full p-2 mb-4 rounded-lg border border-red-300 focus:outline-none focus:ring-2 focus:ring-500">
+                <button id="deleteButton" class="w-full bg-red-600 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition duration-300">Delete Book</button>
+            </div>
+        </div>
+
+        <hr class="my-8 border-gray-300">
+        <div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Current Inventory</h2>
+            <div id="bookList" class="space-y-4">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let books = [];
+        
+        const bookListElement = document.getElementById('bookList');
+        const messageBox = document.getElementById('messageBox');
+
+        function showMessage(message, duration = 3000) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden');
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, duration);
+        }
+
+        function renderBooks() {
+            bookListElement.innerHTML = '';
+
+            if (books.length === 0) {
+                bookListElement.innerHTML = '<p class="text-center text-gray-500">The inventory is currently empty. Add your first book above!</p>';
+            }
+
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = `p-4 rounded-lg shadow-sm ${book.available ? 'bg-green-50' : 'bg-red-50'}`;
+                bookCard.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-800">${book.title}</h3>
+                    <p class="text-gray-600">Author: ${book.author}</p>
+                    <p class="text-lg font-semibold text-gray-800">Price: ₹${book.price}</p>
+                    <span class="text-sm font-medium ${book.available ? 'text-green-700' : 'text-red-700'}">
+                        Status: ${book.available ? 'Available' : 'Unavailable'}
+                    </span>
+                `;
+                bookListElement.appendChild(bookCard);
+            });
+        }
+
+        document.getElementById('addButton').addEventListener('click', () => {
+            const title = document.getElementById('addTitle').value.trim();
+            const author = document.getElementById('addAuthor').value.trim();
+            const price = parseFloat(document.getElementById('addPrice').value);
+            const available = document.getElementById('addAvailable').checked;
+
+            if (title && author && !isNaN(price)) {
+                books.push({ title, author, price, available });
+                document.getElementById('addTitle').value = '';
+                document.getElementById('addAuthor').value = '';
+                document.getElementById('addPrice').value = '';
+                document.getElementById('addAvailable').checked = false;
+                renderBooks();
+                showMessage(`Book "${title}" added successfully!`);
+            } else {
+                showMessage('Please fill in all fields to add a book.');
+            }
+        });
+
+        document.getElementById('updateButton').addEventListener('click', () => {
+            const titleToUpdate = document.getElementById('updateTitle').value.trim();
+            const newPrice = parseFloat(document.getElementById('updatePrice').value);
+
+            if (titleToUpdate && !isNaN(newPrice)) {
+                const book = books.find(b => b.title === titleToUpdate);
+                if (book) {
+                    book.price = newPrice;
+                    document.getElementById('updateTitle').value = '';
+                    document.getElementById('updatePrice').value = '';
+                    renderBooks();
+                    showMessage(`Price for "${titleToUpdate}" updated to ₹${newPrice}.`);
+                } else {
+                    showMessage('Book not found!');
+                }
+            } else {
+                showMessage('Please enter a title and a new price.');
+            }
+        });
+
+        document.getElementById('toggleAvailableButton').addEventListener('click', () => {
+            const titleToToggle = document.getElementById('toggleAvailableTitle').value.trim();
+            
+            if (titleToToggle) {
+                const book = books.find(b => b.title === titleToToggle);
+                if (book) {
+                    book.available = !book.available;
+                    document.getElementById('toggleAvailableTitle').value = '';
+                    renderBooks();
+                    showMessage(`Availability for "${titleToToggle}" has been toggled.`);
+                } else {
+                    showMessage('Book not found!');
+                }
+            } else {
+                showMessage('Please enter a title to toggle availability.');
+            }
+        });
+
+        document.getElementById('deleteButton').addEventListener('click', () => {
+            const titleToDelete = document.getElementById('deleteTitle').value.trim();
+            
+            if (titleToDelete) {
+                const initialLength = books.length;
+                books = books.filter(b => b.title !== titleToDelete);
+                if (books.length < initialLength) {
+                    document.getElementById('deleteTitle').value = '';
+                    renderBooks();
+                    showMessage(`Book "${titleToDelete}" has been deleted.`);
+                } else {
+                    showMessage('Book not found!');
+                }
+            } else {
+                showMessage('Please enter a title to delete.');
+            }
+        });
+
+        renderBooks();
+    </script>
+
+</body>
+</html>

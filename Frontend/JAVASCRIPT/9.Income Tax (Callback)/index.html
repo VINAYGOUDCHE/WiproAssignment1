@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tax Calculator</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-4xl space-y-8">
+
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-gray-800">Income Tax Calculator</h1>
+            <p class="mt-2 text-lg text-gray-500">
+                Enter your details to calculate your income tax.
+            </p>
+        </div>
+
+        <!-- Tax Input Form -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Calculate Tax</h2>
+                <form id="taxForm" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="name" placeholder="John Doe" required
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="pan" class="block text-sm font-medium text-gray-700">PAN Number</label>
+                        <input type="text" id="pan" placeholder="ABCDE1234F" required
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="income" class="block text-sm font-medium text-gray-700">Annual Income ($)</label>
+                        <input type="number" id="income" placeholder="50000" required
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                    <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                        Calculate Tax
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tax Result Display -->
+            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Tax Calculation Result</h2>
+                <div id="resultDisplay" class="space-y-4">
+                    <p class="text-gray-500 text-center">
+                        The result will appear here after calculation.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved Tax Records -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Saved Tax Records</h2>
+            <div id="recordsTable" class="overflow-x-auto">
+                <!-- Records will be dynamically inserted here -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global array to store tax records, acting as a mini-database
+        const taxRecords = [];
+
+        /**
+         * Tax slab definitions. This is a simplified model for demonstration.
+         * The slabs are ordered from lowest income to highest.
+         */
+        const taxSlabs = [
+            { min: 0, max: 25000, rate: 0.10 },
+            { min: 25001, max: 50000, rate: 0.15 },
+            { min: 50001, max: 100000, rate: 0.20 },
+            { min: 100001, max: Infinity, rate: 0.30 }
+        ];
+
+        /**
+         * Calculates the income tax based on the provided annual income using a slab method.
+         * It then calls a callback function with the calculated data.
+         * @param {string} name - The name of the taxpayer.
+         * @param {string} pan - The PAN number.
+         * @param {number} income - The annual income.
+         * @param {Function} callback - The function to call after tax is calculated.
+         */
+        const calculateTax = (name, pan, income, callback) => {
+            let tax = 0;
+            let remainingIncome = income;
+
+            // Loop through the tax slabs to calculate tax
+            for (const slab of taxSlabs) {
+                if (remainingIncome > slab.min) {
+                    const taxableAmountInSlab = Math.min(remainingIncome, slab.max) - slab.min;
+                    tax += taxableAmountInSlab * slab.rate;
+                    if (remainingIncome <= slab.max) break;
+                }
+            }
+
+            // Call the provided callback with the structured result
+            callback({ name, pan, income, tax });
+        };
+
+        /**
+         * Callback function to log the result to the browser console.
+         * @param {object} result - The tax calculation result object.
+         */
+        const logToConsole = (result) => {
+            console.log("--- Tax Calculation Result ---");
+            console.log(`Name: ${result.name}`);
+            console.log(`PAN: ${result.pan}`);
+            console.log(`Annual Income: $${result.income.toFixed(2)}`);
+            console.log(`Calculated Tax: $${result.tax.toFixed(2)}`);
+            console.log("----------------------------");
+        };
+
+        /**
+         * Callback function to display the result on the HTML page.
+         * @param {object} result - The tax calculation result object.
+         */
+        const displayOnPage = (result) => {
+            const resultDiv = document.getElementById('resultDisplay');
+            resultDiv.innerHTML = `
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
+                    <p class="text-sm text-blue-700">
+                        <span class="font-medium">Name:</span> ${result.name}
+                    </p>
+                    <p class="text-sm text-blue-700">
+                        <span class="font-medium">PAN:</span> ${result.pan}
+                    </p>
+                    <p class="text-sm text-blue-700">
+                        <span class="font-medium">Annual Income:</span> $${result.income.toFixed(2)}
+                    </p>
+                    <p class="text-sm text-blue-700">
+                        <span class="font-medium">Calculated Tax:</span> <span class="font-bold text-lg">$${result.tax.toFixed(2)}</span>
+                    </p>
+                </div>
+            `;
+        };
+
+        /**
+         * Callback function to save the result to the global taxRecords array.
+         * It also calls a function to update the records table on the page.
+         * @param {object} result - The tax calculation result object.
+         */
+        const saveToRecords = (result) => {
+            taxRecords.push({ ...result, timestamp: new Date().toLocaleString() });
+            updateRecordsTable();
+        };
+
+        /**
+         * Function to dynamically generate and update the records table on the page.
+         */
+        const updateRecordsTable = () => {
+            const tableDiv = document.getElementById('recordsTable');
+            if (taxRecords.length === 0) {
+                tableDiv.innerHTML = `<p class="text-gray-500 text-center">No records saved yet.</p>`;
+                return;
+            }
+
+            // Create the table structure
+            const tableHTML = `
+                <table class="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">PAN</th>
+                            <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Income</th>
+                            <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Tax</th>
+                            <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        ${taxRecords.map(record => `
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">${record.name}</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">${record.pan}</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">$${record.income.toFixed(2)}</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm font-semibold text-gray-700">$${record.tax.toFixed(2)}</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">${record.timestamp}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            tableDiv.innerHTML = tableHTML;
+        };
+
+        // Event listener for the form submission
+        document.getElementById('taxForm').addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent the default form submission behavior
+
+            // Get values from the form inputs
+            const name = document.getElementById('name').value;
+            const pan = document.getElementById('pan').value;
+            const income = parseFloat(document.getElementById('income').value);
+
+            // Define the main callback function that orchestrates the three actions
+            const mainCallback = (result) => {
+                logToConsole(result);
+                displayOnPage(result);
+                saveToRecords(result);
+            };
+
+            // Call the core tax calculation function with the main callback
+            calculateTax(name, pan, income, mainCallback);
+        });
+
+        // Initialize the records table on page load
+        updateRecordsTable();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Bank Customer Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        pre {
+            background: #e9e9e9;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Dynamic Bank Customer Management System</h1>
+        <p>Click the button to start the program. You will be prompted for inputs, and the current customer list will be shown in a pop-up after each operation.</p>
+        <button onclick="manageCustomersAndDisplay()">Start Program</button>
+
+        <hr>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function manageCustomersAndDisplay() {
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = ''; // Clear previous output
+            
+            let logOutput = '';
+            function logToPage(message) {
+                logOutput += message + '\n';
+            }
+
+            // 1. Ask how many customers to register.
+            const numberOfCustomers = parseInt(prompt("How many customers do you want to register?"));
+
+            if (isNaN(numberOfCustomers) || numberOfCustomers <= 0) {
+                alert("Please enter a valid number greater than 0.");
+                return;
+            }
+
+            // 2. Use a dynamic array literal to store their names.
+            const customers = [];
+            for (let i = 0; i < numberOfCustomers; i++) {
+                const name = prompt(`Enter name for customer ${i + 1}:`);
+                customers.push(name);
+            }
+
+            logToPage("Original Customers: " + customers.join(", "));
+            logToPage("---");
+
+            // 3. Display customer names using a for...of loop.
+            logToPage("Customers using for...of:");
+            for (const name of customers) {
+                logToPage(name);
+            }
+            logToPage("---");
+
+            // 4. Display customer IDs (array indexes) using a for...in loop.
+            logToPage("Customer IDs using for...in:");
+            for (const index in customers) {
+                logToPage(index);
+            }
+            logToPage("---");
+
+            // 5. Add a new customer at the end using push().
+            const newCustomerPush = prompt("Enter the name of a new customer to add (push):");
+            if (newCustomerPush) {
+                customers.push(newCustomerPush);
+                alert(`After push('${newCustomerPush}'), the list is: ${customers.join(', ')}`);
+                logToPage(`After push('${newCustomerPush}'): ` + customers.join(", "));
+            }
+            logToPage("---");
+
+            // 6. Remove the last customer using pop().
+            customers.pop();
+            alert(`After pop(), the list is: ${customers.join(', ')}`);
+            logToPage("After pop(): " + customers.join(", "));
+            logToPage("---");
+
+            // 7. Insert a new customer at a specific position using splice().
+            const newCustomerInsert = prompt("Enter the name of a new customer to insert:");
+            if (newCustomerInsert) {
+                const insertPosition = parseInt(prompt(`Enter the position (0 to ${customers.length}) to insert '${newCustomerInsert}':`));
+                if (!isNaN(insertPosition) && insertPosition >= 0 && insertPosition <= customers.length) {
+                    customers.splice(insertPosition, 0, newCustomerInsert);
+                    alert(`After inserting '${newCustomerInsert}' at position ${insertPosition}, the list is: ${customers.join(', ')}`);
+                    logToPage(`After insert '${newCustomerInsert}' at position ${insertPosition}: ` + customers.join(", "));
+                } else {
+                    alert("Invalid position entered for insertion.");
+                }
+            }
+            logToPage("---");
+
+            // 8. Delete a customer at a specific position using splice() again.
+            const deletePosition = parseInt(prompt(`Enter the position (0 to ${customers.length - 1}) of the customer to delete:`));
+
+            if (!isNaN(deletePosition) && deletePosition >= 0 && deletePosition < customers.length) {
+                customers.splice(deletePosition, 1);
+                alert(`After deleting at position ${deletePosition}, the list is: ${customers.join(', ')}`);
+                logToPage(`After delete at position ${deletePosition}: ` + customers.join(", "));
+            } else {
+                alert("Invalid position entered for deletion.");
+            }
+            logToPage("---");
+
+            // 9. Display the final customer list.
+            logToPage("Final Customers: " + customers.join(", "));
+
+            outputDiv.innerHTML = '<h2>Program Output</h2><pre>' + logOutput + '</pre>';
+        }
+    </script>
+
+</body>
+</html>

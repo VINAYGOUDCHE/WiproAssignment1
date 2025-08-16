@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Native JS Quiz Game</title>
+</head>
+<body>
+    <h1>Quiz Game</h1>
+    <p>Please run this file in your browser to see the game pop-ups.</p>
+
+    <script>
+        alert("Welcome to the quiz game!");
+
+        const userName = prompt("What is your name?");
+        
+        const isReady = confirm(`Hello, ${userName}! Are you ready for the quiz?`);
+
+        if (isReady) {
+            const question = "What is the largest planet in our solar system? (A, B, C, or D)\nA) Earth\nB) Jupiter\nC) Saturn\nD) Mars";
+            const userAnswer = prompt(question);
+            
+            const correctAnswer = "B";
+            
+            if (userAnswer && userAnswer.toUpperCase() === correctAnswer) {
+                alert("Correct! You got it right.");
+            } else {
+                alert("Wrong! The correct answer was Jupiter (B).");
+            }
+        } else {
+            alert("Okay, maybe next time!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equality & Inequality Checker</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main container for the application -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg">
+        <h1 class="text-3xl font-bold text-gray-800 text-center mb-4">Equality & Inequality Checker</h1>
+        <p class="text-gray-600 text-center mb-6">Enter two values to compare them using different JavaScript operators.</p>
+
+        <!-- Input fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <label for="value1" class="block text-sm font-medium text-gray-700">First Value</label>
+                <input type="text" id="value1" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out" placeholder="e.g., 10">
+            </div>
+            <div>
+                <label for="value2" class="block text-sm font-medium text-gray-700">Second Value</label>
+                <input type="text" id="value2" class="mt-1 block w-full px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out" placeholder="e.g., '10'">
+            </div>
+        </div>
+
+        <!-- Compare button -->
+        <button id="compareBtn" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out">
+            Compare Values
+        </button>
+
+        <!-- Output section -->
+        <div id="output" class="mt-8 bg-gray-800 text-white rounded-lg p-6 shadow-inner text-sm overflow-auto">
+            <pre id="output-content" class="whitespace-pre-wrap"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('compareBtn').addEventListener('click', () => {
+            // Get input elements and output area
+            const value1Input = document.getElementById('value1');
+            const value2Input = document.getElementById('value2');
+            const outputContent = document.getElementById('output-content');
+
+            // Get the raw string values from the inputs
+            let val1 = value1Input.value;
+            let val2 = value2Input.value;
+
+            // Helper function to determine the type and value for comparison
+            const getTypedValue = (val) => {
+                if (val === 'true' || val === 'false') {
+                    return { value: (val === 'true'), type: 'boolean' };
+                }
+                // Checks if it's a valid number string and not an empty string or whitespace
+                if (val.trim() !== '' && !isNaN(Number(val))) {
+                    return { value: Number(val), type: 'number' };
+                }
+                return { value: val, type: 'string' };
+            };
+
+            const typedVal1 = getTypedValue(val1);
+            const typedVal2 = getTypedValue(val2);
+
+            // Construct the output string
+            let output = `First Value: ${val1} (${typedVal1.type})\n`;
+            output += `Second Value: ${val2} (${typedVal2.type})\n\n`;
+
+            // Perform and explain the equality checks
+            // == (Equality)
+            const resultEq = typedVal1.value == typedVal2.value;
+            output += `Using == : ${resultEq}  → Equality ignores type.\n`;
+
+            // === (Strict Equality)
+            const resultStrictEq = typedVal1.value === typedVal2.value;
+            output += `Using === : ${resultStrictEq} → Strict equality checks type too.\n`;
+            
+            // != (Inequality)
+            const resultIneq = typedVal1.value != typedVal2.value;
+            output += `Using != : ${resultIneq}  → Values considered equal.\n`;
+
+            // !== (Strict Inequality)
+            const resultStrictIneq = typedVal1.value !== typedVal2.value;
+            output += `Using !== : ${resultStrictIneq} → Strict inequality because types differ.\n`;
+
+            // Display the result
+            outputContent.textContent = output;
+        });
+    </script>
+</body>
+</html>

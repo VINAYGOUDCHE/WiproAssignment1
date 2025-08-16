@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Team Player Details</title>
+</head>
+<body>
+    <h1>Sports Team Player Details</h1>
+    <pre id="output"></pre>
+
+    <script>
+        // Data for the players
+        const player = {
+            name: "Virat Kohli",
+            age: 36,
+            sport: "Cricket",
+            stats: {
+                matches: 500,
+                runs: 25000,
+                average: 57.2
+            }
+        };
+
+        const player2 = {
+            name: "Lionel Messi",
+            age: 37,
+            sport: "Football",
+            stats: {
+                matches: 800,
+                goals: 720,
+                assists: 300
+            }
+        };
+
+        const outputElement = document.getElementById("output");
+
+        const printPlayerDetails = (p) => {
+            const { name, sport, stats } = p;
+            let output = "";
+
+            if (sport === "Cricket") {
+                const { matches, runs, average } = stats;
+                output += `Player ${name} plays ${sport}.\n`;
+                output += `Matches: ${matches} | Runs: ${runs} | Batting Average: ${average}\n`;
+            } else if (sport === "Football") {
+                const { matches, goals, assists } = stats;
+                output += `Player ${name} plays ${sport}.\n`;
+                output += `Matches: ${matches} | Goals: ${goals} | Assists: ${assists}\n`;
+            }
+
+            outputElement.textContent += output + "\n";
+        };
+
+        const { name, sport, stats: { matches, runs, average } } = player;
+        outputElement.textContent += `Player ${name} plays ${sport}.\n`;
+        outputElement.textContent += `Matches: ${matches} | Runs: ${runs} | Batting Average: ${average}\n\n`;
+
+        const players = [player, player2];
+        const [kohli, messi] = players;
+
+        printPlayerDetails(kohli);
+        printPlayerDetails(messi);
+    </script>
+</body>
+</html>

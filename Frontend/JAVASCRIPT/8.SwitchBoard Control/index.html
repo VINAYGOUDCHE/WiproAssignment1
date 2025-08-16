@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switchboard Control</title>
+</head>
+<body>
+
+    <h1>Switchboard Control</h1>
+    <p> Please goto Inspect to see Output</p>
+    <script>
+        
+        const buildingName = "Chepuri Apartments";
+
+        let deviceStatus;
+        var counter;
+        for (counter = 1; counter <= 3; counter++) {
+            if (counter % 2 === 1) {
+                deviceStatus = "ON";
+            } else {
+                deviceStatus = "OFF";
+            }
+            if (counter === 1) {
+                console.log(`Checking Switch 1: Light is ${deviceStatus}`);
+            } else if (counter === 2) {
+                console.log(`Checking Switch 2: Fan is ${deviceStatus}`);
+            } else {
+                console.log(`Checking Switch 3: AC is ${deviceStatus}`);
+            }
+        }
+
+        console.log(`All switches checked for ${buildingName}.`);        
+        /*try {
+            console.log("Attempting to reassign const variable...");
+            buildingName = "New Building Name";
+        } catch (error) {
+            console.error("Error when reassigning 'const' variable:", error.message);
+        }*/
+    </script>
+
+</body>
+</html>
