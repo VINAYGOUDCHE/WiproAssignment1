@@ -17,10 +17,8 @@ import AccessoriesForm from './Day2ReactFiles/Lab14A';
 import BakingItemsManager from './Day2ReactFiles/Lab14B';
 import FlightTicket from './Day2ReactFiles/Lab15';
 import MovieForm from './Day2ReactFiles/Lab16';
-
+import Lab17 from './Day2ReactFiles/Lab17';
 import Lab18 from './Day2ReactFiles/Lab18';
-
-
 
 
 function App() {
@@ -117,6 +115,11 @@ function App() {
       <div>
         <MovieForm/>
       </div>
+      {/*-------Lab17-------*/}
+      <div>
+        <Lab17/>
+      </div>
+      {/*-------Lab18-------*/}
       <div>
         <Lab18/>
       </div>
