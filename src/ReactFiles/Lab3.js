@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const Phone = () => {
   // Declare a state object 'phone' with brand, model, and price
