@@ -19,7 +19,6 @@ import FlightTicket from './Day2ReactFiles/Lab15';
 import MovieForm from './Day2ReactFiles/Lab16';
 
 import Lab18 from './Day2ReactFiles/Lab18';
-import Lab17 from './Day2ReactFiles/Lab17';
 
 
 
@@ -118,11 +117,6 @@ function App() {
       <div>
         <MovieForm/>
       </div>
-      {/*-------Lab17-------*/}
-      <div>
-        <Lab17/>
-      </div>
-      {/*-------Lab18-------*/}
       <div>
         <Lab18/>
       </div>
